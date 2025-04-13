@@ -1,0 +1,180 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>     
+    <meta charset="UTF-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <title>Login</title>     
+    <style>         
+        * { margin: 0; padding: 0; box-sizing: border-box; }          
+        body { display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }          
+        .profile { width: 80px;
+            height: 80px; border-radius: 50%;
+            background-color: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }          
+        h4 { margin-top: 10px;
+        }          
+        .container { display: flex;
+            width: 60%;
+            height: 1000px;
+            margin-top: 20px;
+            border: 2px solid black;
+        }          
+        .left { flex: 1;
+            border-right: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }          
+        .right { flex: 1;
+            display: flex;
+            flex-direction: column;
+        }          
+        .top { flex: 1;
+            border-bottom: 2px solid black;
+        }          
+        .bottom { flex: 1;
+        }          
+        .login-form { display: flex;
+            flex-direction: column; width: 80%;
+        }          
+        .login-form input, .login-form select, .login-form textarea {
+            margin: 5px 0;
+            padding: 8px;
+            width: 100%;
+        }          
+        .login-form button {
+            padding: 8px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }     
+    </style> 
+</head> 
+<body>      
+    <div class="profile"></div>     
+    <h4>Title</h4>      
+    <div class="container">         
+        <div class="left">             
+            <form class="login-form" id="registrationForm">
+                <h3>Registration</h3> <br>                
+                Name: <input type="text" id="name" placeholder="Full Name" required>
+                Email: <input type="email" id="email" placeholder="User Email" required>               
+                Password: <input type="password" id="password" placeholder="Password" required>   
+                Confirm Password: <input type="password" id="confirmPassword" placeholder="Confirm Password" required>  
+                Date of Birth: <input type="date" id="dob" required>
+                Country:
+                <select id="country" required>
+                    <option value="">Select Country</option>
+                    <option value="USA">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="Bangladesh">Bangladesh</option>
+                    <option value="Germany">Germany</option>
+                    <option value="Australia">Australia</option>
+                    <option value="France">France</option>
+                    <option value="Japan">Japan</option>
+                    <option value="China">China</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Russia">Russia</option>
+                    <option value="Italy">Italy</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Netherlands">Netherlands</option>
+                    <option value="South Korea">South Korea</option>
+                    <option value="Saudi Arabia">Saudi Arabia</option>
+                    <option value="Turkey">Turkey</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Switzerland">Switzerland</option>
+                </select>
+
+                Gender: 
+                <label><input type="radio" name="gender" value="male" required> Male:</label>
+                <label><input type="radio" name="gender" value="female"> Female: </label>
+                <label><input type="radio" name="gender" value="other"> Other: </label><br>
+
+                Favorite Color: <input type="color" id="color">
+
+                Opinion: 
+                <textarea rows="4" id="opinion" placeholder="Share your thoughts..."></textarea><br>
+
+                <label>
+                    <input type="checkbox" id="terms" required> I agree to the 
+                    <a href="terms.html" target="_blank">Terms and Conditions</a>
+                </label>
+
+                <button type="submit">Submit</button>             
+            </form>         
+        </div>         
+        <div class="right">             
+            <div class="top"></div>             
+            <div class="bottom"></div>         
+        </div>     
+    </div>  
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault(); 
+    
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const dob = document.getElementById('dob').value;
+            const country = document.getElementById('country').value;
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const terms = document.getElementById('terms').checked;
+    
+            // Validation patterns
+            const namePattern = /^[A-Za-z.\-\s]+$/;
+            const aiubEmailPattern = /^\d{2}-\d{5}-\d@student\.aiub\.edu$/;
+    
+            // Check for empty required fields
+            if (!name || !email || !password || !confirmPassword || !dob || !country || !gender || !terms) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+    
+            // Name validation
+            if (!namePattern.test(name)) {
+                alert("Name can only contain letters, dots (.), dashes (-), and spaces.");
+                return;
+            }
+    
+            // Email format validation
+            if (!aiubEmailPattern.test(email)) {
+                alert("Email must be in the format: XX-XXXXX-X@student.aiub.edu");
+                return;
+            }
+    
+            // Password length
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters.");
+                return;
+            }
+    
+            // Confirm password match
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+    
+            alert("Form submitted successfully!");
+            this.submit(); // Submit the form if all checks pass
+        });
+    </script>
+    
+</body> 
+</html>
