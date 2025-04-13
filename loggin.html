@@ -114,7 +114,7 @@
                     <input type="checkbox" id="terms" required> I agree to the 
                     <a href="terms.html" target="_blank">Terms and Conditions</a>
                 </label>
-
+                <br>
                 <button type="submit">Submit</button>             
             </form>         
         </div>         
@@ -126,7 +126,7 @@
 
     <script>
         document.getElementById('registrationForm').addEventListener('submit', function (e) {
-            e.preventDefault(); 
+            e.preventDefault();
     
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -137,42 +137,57 @@
             const gender = document.querySelector('input[name="gender"]:checked');
             const terms = document.getElementById('terms').checked;
     
-            // Validation patterns
             const namePattern = /^[A-Za-z.\-\s]+$/;
             const aiubEmailPattern = /^\d{2}-\d{5}-\d@student\.aiub\.edu$/;
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/;
     
-            // Check for empty required fields
             if (!name || !email || !password || !confirmPassword || !dob || !country || !gender || !terms) {
                 alert("Please fill out all required fields.");
                 return;
             }
     
-            // Name validation
             if (!namePattern.test(name)) {
                 alert("Name can only contain letters, dots (.), dashes (-), and spaces.");
                 return;
             }
     
-            // Email format validation
             if (!aiubEmailPattern.test(email)) {
                 alert("Email must be in the format: XX-XXXXX-X@student.aiub.edu");
                 return;
             }
     
-            // Password length
             if (password.length < 6) {
-                alert("Password must be at least 6 characters.");
+                alert("Password must be at least 6 characters long.");
                 return;
             }
     
-            // Confirm password match
+            if (!passwordPattern.test(password)) {
+                alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+                return;
+            }
+    
             if (password !== confirmPassword) {
                 alert("Passwords do not match.");
                 return;
             }
     
+            
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+    
+            if (age < 18) {
+                alert("You must be at least 18 years old to register.");
+                return;
+            }
+    
             alert("Form submitted successfully!");
-            this.submit(); // Submit the form if all checks pass
+            this.submit();
         });
     </script>
     
